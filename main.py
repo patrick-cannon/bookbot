@@ -18,10 +18,11 @@ def count_characters(string):
 
     return characters
 
-# def convert_dict(dict):
-    return [{key: value} for key, value in dict.items()]
 
-# def sort_on(dict):
+def convert_dict(dict):
+    return [{"character": key, "num": value} for key, value in dict.items()]
+
+def sort_on(dict):
     return dict["num"]
 
 def main():
@@ -29,8 +30,15 @@ def main():
     book_text = get_text(book_path)
     num_words = count_words(book_text)
     num_characters = count_characters(book_text)
-    # list_dict = convert_dict(num_characters)
+    list_dict = convert_dict(num_characters)
 
-    print(f"{num_words} words in text! {num_characters} characters in text!")
+
+    print(f"--- Begin report of {book_path} ---")
+    print(f"{num_words} words found in the document")
+    list_dict.sort(reverse=True, key=sort_on)
+    for item in list_dict:
+        if item["character"].isalpha():
+            print(f"The '{item['character']}' character was found {item['num']} times")
+    print("--- End report ---")
 
 main()
